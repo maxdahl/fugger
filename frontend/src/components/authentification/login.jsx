@@ -208,6 +208,7 @@ function LoginPage({ setUser }) {
                   {t("third-party-login-text")}
                 </Typography>
                 <Button
+                  disabled={true}
                   sx={{
                     color: "text.secondary",
                     borderRadius: "10px",
@@ -223,6 +224,7 @@ function LoginPage({ setUser }) {
                   {t("third-party-google")}
                 </Button>
                 <Button
+                  disabled={true}
                   sx={{
                     color: "#4267B2",
                     borderRadius: "10px",
@@ -238,6 +240,7 @@ function LoginPage({ setUser }) {
                   {t("third-party-facebook")}
                 </Button>
                 <Button
+                  disabled={true}
                   sx={{
                     textTransform: "none",
                     fontSize: "medium",
