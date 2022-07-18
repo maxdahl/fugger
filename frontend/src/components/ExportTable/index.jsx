@@ -3,9 +3,7 @@ import { Button } from "@mui/material";
 import useTableData from "@hooks/useTableData";
 import { useTranslation } from "react-i18next";
 
-
 import * as XLSX from "xlsx-js-style";
-
 
 function ExportTable() {
   const { t } = useTranslation();
