@@ -58,6 +58,7 @@ const User = sequelize.define(
 
     theme: {
       type: DataTypes.STRING(10),
+      default: "themeDark",
     },
   },
   { tableName: "users" }
