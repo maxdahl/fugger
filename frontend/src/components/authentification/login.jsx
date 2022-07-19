@@ -1,3 +1,8 @@
+import * as React from "react";
+import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import PropTypes from "prop-types";
+
 import {
   Alert,
   Avatar,
@@ -17,9 +22,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GoogleLogo from "@assets/GoogleLogo";
-import * as React from "react";
-import { useState } from "react";
-import PropTypes from "prop-types";
+
 import {
   Link as RouterLink,
   MemoryRouter,
@@ -29,6 +32,9 @@ import { StaticRouter } from "react-router-dom/server";
 import validator from "validator";
 import { useTranslation } from "react-i18next";
 import Api from "@services/Api";
+
+import { userWithAuth } from "@recoil/users";
+
 // To convert react-router Links in MUI Links, to style them like MUI components --- start --- //
 function Router(props) {
   const { children } = props;
@@ -45,7 +51,7 @@ Router.propTypes = {
 
 // ----------------------------------- end ----------------------------------- //
 
-function LoginPage({ setUser }) {
+function LoginPage() {
   const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState(true);
   const [password, setPassword] = useState("");
@@ -67,11 +73,12 @@ function LoginPage({ setUser }) {
   const [errorStatus, setErrorStatus] = useState();
   const navigate = useNavigate();
 
+  const setUser = useSetRecoilState(userWithAuth);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const user = await Api.auth.login(email, password);
-      setUser(user);
+      setUser(user.data);
       navigate("/");
     } catch (err) {
       setErrorStatus(err.response.status);
@@ -144,6 +151,9 @@ function LoginPage({ setUser }) {
                   InputProps={{
                     style: { fontSize: 13 },
                   }}
+                  InputLabelProps={{
+                    color: "contrastText",
+                  }}
                 />
                 <TextField
                   fullWidth
@@ -169,6 +179,9 @@ function LoginPage({ setUser }) {
                         </IconButton>
                       </InputAdornment>
                     ),
+                  }}
+                  InputLabelProps={{
+                    color: "contrastText",
                   }}
                 />
                 <Typography color="text.secondary" variant="body2">
@@ -202,52 +215,52 @@ function LoginPage({ setUser }) {
                   {t("third-party-login-text")}
                 </Typography>
                 <Button
+                  disabled={true}
                   sx={{
                     color: "text.secondary",
                     borderRadius: "10px",
                     "&:hover": {
-                      backgroundColor: "primary.main",
                       color: "primary.contrastText",
                     },
                   }}
                   id="login-button-google"
                   fullWidth
-                  variant="outlined"
+                  variant="contained"
                   startIcon={<GoogleLogo />}
                 >
                   {t("third-party-google")}
                 </Button>
                 <Button
+                  disabled={true}
                   sx={{
                     color: "#4267B2",
                     borderRadius: "10px",
                     "&:hover": {
-                      backgroundColor: "primary.main",
                       color: "primary.contrastText",
                     },
                   }}
                   id="login-button-facebook"
                   fullWidth
-                  variant="outlined"
+                  variant="contained"
                   startIcon={<FacebookIcon />}
                 >
                   {t("third-party-facebook")}
                 </Button>
                 <Button
+                  disabled={true}
                   sx={{
                     textTransform: "none",
                     fontSize: "medium",
                     color: "#0A66C2",
                     borderRadius: "10px",
                     "&:hover": {
-                      backgroundColor: "primary.main",
                       color: "primary.contrastText",
                     },
                   }}
                   color="primary"
                   id="login-button-linkedin"
                   fullWidth
-                  variant="outlined"
+                  variant="contained"
                   endIcon={<LinkedInIcon sx={{ margin: "-9px" }} />}
                 >
                   {t("third-party-linkedin")}
@@ -266,9 +279,5 @@ function LoginPage({ setUser }) {
     </Box>
   );
 }
-
-LoginPage.propTypes = {
-  setUser: PropTypes.func.isRequired,
-};
 
 export default LoginPage;

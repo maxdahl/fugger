@@ -58,6 +58,7 @@ const User = sequelize.define(
 
     theme: {
       type: DataTypes.STRING(10),
+      default: "themeDark",
     },
   },
   { tableName: "users" }
@@ -66,7 +67,7 @@ const User = sequelize.define(
 User.beforeCreate((user) => {
   return bcrypt.hash(user.password, 10).then((hash) => {
     user.password = hash;
-    user.theme = "theme1";
+    user.theme = "themeDark";
   });
 });
 
@@ -75,14 +76,18 @@ User.afterCreate(async (user) => {
   // const userDatevAccounts = {} // { category: { subcategory: [{accountName: "", accountNumber: 123}]}}
 
   // Get unique category names and bulk create them
-  const categoryNames = new Set(
-    defaultDatevAccounts.map((acc) => acc.category_name)
-  );
-  const categories = [...categoryNames].map((cat) => ({
-    userId: user.id,
-    name: cat,
-  }));
-  const userCategories = await Category.bulkCreate(categories);
+  const categories = {};
+  for (const acc of defaultDatevAccounts) {
+    if (!categories[acc.category_name]) {
+      categories[acc.category_name] = {
+        userId: user.id,
+        name: acc.category_name,
+        order_num: acc.category_order,
+      };
+    }
+  }
+
+  const userCategories = await Category.bulkCreate(Object.values(categories));
 
   // convert subcategory names to object to make them unique, find parent category and bulk insert into db
   const subcategories = {};
@@ -93,6 +98,7 @@ User.afterCreate(async (user) => {
           .id,
         name: acc.subcategory_name,
         userId: user.id,
+        order_num: 0,
       };
     }
   }
@@ -109,6 +115,7 @@ User.afterCreate(async (user) => {
         (cat) => cat.name === acc.subcategory_name
       ).id,
       userId: user.id,
+      order_num: 0,
     };
   });
 

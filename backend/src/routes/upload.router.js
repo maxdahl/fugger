@@ -5,9 +5,9 @@ const router = express.Router();
 const { UploadController } = require("../controllers");
 const { verifyToken } = require("../middleware/auth.middleware");
 
-router.get("/", verifyToken, (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   try {
-    UploadController.getUploadHistory(req, res);
+    await UploadController.getUploadHistory(req, res);
   } catch (err) {
     res.status(500).send("500-error");
   }

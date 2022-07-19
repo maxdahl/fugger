@@ -1,10 +1,9 @@
+const sequelize = require("sequelize");
 const { Op } = require("sequelize");
 const { Transfer } = require("../models");
 const { Category, Subcategory, DatevAccount } = require("../models");
 
 const DatevService = require("./datev.service");
-
-// const BudgetService = require("./budget.service");
 
 const parseDate = require("../utils/dateParser");
 const { ValueError, NotFoundError } = require("../exceptions");
@@ -25,7 +24,12 @@ class TransferService {
         { model: Subcategory },
       ],
 
-      order: [["date", "ASC"]],
+      // order by date and order_num
+      // if order_num is zero, put it to the end
+      order: [
+        ["date", "ASC"],
+        [sequelize.literal("category.order_num = 0, category.order_num")],
+      ],
       raw: true,
       nest: true,
     });
@@ -62,7 +66,7 @@ class TransferService {
     return Transfer.bulkCreate(dbTransfers, { updateOnDuplicate: ["amount"] });
   }
 
-  static async updateTransfer(transferId, userId, amount) {
+  static async updateTransfer(transferId, userId, amount, type) {
     const transfer = await Transfer.findOne({
       where: { id: transferId, userId },
     });
@@ -71,7 +75,7 @@ class TransferService {
     const parsedAmount = Number.parseFloat(amount);
     if (Number.isNaN(parsedAmount)) throw new ValueError();
 
-    return transfer.update({ amount: parsedAmount });
+    return transfer.update({ amount: parsedAmount, type });
   }
 }
 

@@ -1,3 +1,4 @@
+const sequelize = require("sequelize");
 const { Op } = require("sequelize");
 
 const { Budget, Category, Subcategory, DatevAccount } = require("../models");
@@ -23,10 +24,14 @@ class BudgetService {
         { model: Subcategory },
       ],
 
-      order: [["date", "ASC"]],
+      order: [
+        ["date", "ASC"],
+        [sequelize.literal("category.order_num = 0, category.order_num")],
+      ],
       raw: true,
       nest: true,
     });
+
     return budgets;
   }
 
@@ -56,13 +61,6 @@ class BudgetService {
         },
       });
 
-      // update already existing budgets
-      if (budgetEntry) {
-        updatedOrCreatedBudgets.push(
-          await BudgetService.updateBudget(budgetEntry.id, userId, parsedAmount)
-        );
-      }
-
       // create new budgets
       if (budgetDatevAccount && !budgetEntry) {
         dbBudgets.push({
@@ -81,6 +79,32 @@ class BudgetService {
     );
 
     return updatedOrCreatedBudgets;
+  }
+
+  static async createBudget(amount, date, datevAccountId, userId) {
+    const datevAccount = await DatevService.getUserAccount(
+      userId,
+      datevAccountId
+    );
+    if (!datevAccount)
+      throw new NotFoundError(
+        `Datev account with id ${datevAccountId} not found in user ${userId}`
+      );
+
+    const parsedAmount = Math.abs(amount);
+    if (!parsedAmount) throw new ValueError(`${amount} is not a valid number`);
+
+    const parsedDate = parseDate(date);
+    if (!parsedDate) throw new ValueError(`Unable to parse date ${date}`);
+
+    return Budget.create({
+      categoryId: datevAccount.subcategory.category.id,
+      subcategoryId: datevAccount.subcategory.id,
+      datevAccountId: datevAccount.id,
+      amount: parsedAmount,
+      date: parsedDate.date,
+      userId,
+    });
   }
 
   static async updateBudget(budgetId, userId, amount) {

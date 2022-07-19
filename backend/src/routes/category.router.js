@@ -16,9 +16,9 @@ const { verifyToken } = require("../middleware/auth.middleware");
 //   CategoryController.getTotalSums(req, res);
 // });
 
-router.put("/:categoryId", verifyToken, (req, res) => {
+router.put("/:categoryId", verifyToken, async (req, res) => {
   try {
-    CategoryController.updateCategory(req, res);
+    await CategoryController.updateCategory(req, res);
   } catch (err) {
     res.status(500).send("500-error");
   }

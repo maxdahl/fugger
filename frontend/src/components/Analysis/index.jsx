@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 import { useRecoilState } from "recoil";
 
 import { calculateDiff, round } from "@services/utils/math";
@@ -9,8 +11,15 @@ import useTableData from "@hooks/useTableData";
 import MonthRangePicker from "@components/MonthRangePicker";
 
 import Api from "@services/Api";
+
 import ExportTable from "@components/ExportTable";
-import { Box } from "@mui/material";
+import BudgetEditing from "@components/budget/BudgetCard";
+import SuccessModal from "@components/budget/SuccessModel";
+
+import { Box, Button } from "@mui/material";
+
+import { useTranslation } from "react-i18next";
+
 import AnTable from "./Table/AnTable";
 import AnTableRow from "./Table/AnTableRow";
 import AnTableCell from "./Table/AnTableCell";
@@ -22,6 +31,13 @@ function deepCopy(obj) {
 }
 
 function AnalysisTable() {
+  const { t } = useTranslation();
+
+  /* States for Budget Planning Box and Success Message */
+  const [openBudget, setOpenBudget] = useState(false);
+  const [savedSuccessfully, setSavedSuccessfully] = useState(false);
+  const fromAnalysisPage = true;
+
   const {
     isLoading,
     error,
@@ -77,7 +93,7 @@ function AnalysisTable() {
     return true;
   }
 
-  function onCellValueChange(dataObject, key, field, newValue, oldValue) {
+  async function onCellValueChange(dataObject, key, field, newValue, oldValue) {
     if (field === "name") {
       return onNameChange(dataObject, key, newValue, oldValue);
     }
@@ -94,9 +110,14 @@ function AnalysisTable() {
       }
 
       const getFieldColorSx = (val) => {
+        val = Number(val);
         if (Number.isNaN(Number(val))) return {};
-        if (val < 0) return { color: "error.main" };
-        return { color: "success.main" };
+
+        let color = "";
+        if (val > 0) color = "success.main";
+        else if (val < 0) color = "error.main";
+
+        return { color };
       };
 
       const catRowsCopy = deepCopy(categoryRows);
@@ -124,14 +145,15 @@ function AnalysisTable() {
         );
       else if (field === "budget") {
         if (budgetId) Api.budgets.put({ amount: Math.abs(newValue) }, budgetId);
-        else
-          Api.budgets.post([
-            {
-              amount: newValue,
-              date: new Date(Number(timestamp)),
-              account: { id: datevRow.id },
-            },
-          ]);
+        else {
+          const res = await Api.budgets.post({
+            amount: newValue,
+            date: timestamp,
+            accountId: datevRow.id,
+          });
+
+          datevRow.cellData[key].budgetId = res.id;
+        }
       }
 
       for (const row of [datevRow, subcategoryRow, categoryRow]) {
@@ -139,10 +161,12 @@ function AnalysisTable() {
 
         const fieldKey = `${cellKey}-${field}-${timestamp}`;
 
-        const newCellValue =
+        let newCellValue =
           Number(row.cellData[fieldKey].value) -
           Number(oldValue) +
           Number(newValue);
+
+        if (field === "budget") newCellValue = Math.abs(newCellValue);
 
         row.cellData[fieldKey].sx = getFieldColorSx(newCellValue);
         row.cellData[fieldKey].value = newCellValue;
@@ -197,7 +221,22 @@ function AnalysisTable() {
       const key = cell.key || `cell-${index}`;
       const className = cell.className || "";
       const isEditable = cell.isEditable || false;
-      const sx = cell.sx || null;
+      const sx = { ...cell.sx } || {};
+
+      sx.textAlign = cell.field === "name" ? "left" : "right";
+      if (cell.field === "budget") {
+        sx.borderRight = 1;
+        sx.borderRightColor = "table.border.thin";
+      } else if (cell.field === "actual") {
+        sx.borderLeft = 1;
+        sx.borderLeftColor = "table.border.thick";
+      } else if (cell.field === "pct") {
+        sx.borderRight = 1;
+        sx.borderRightColor = "table.border.thick";
+      }
+
+      let { label } = cell;
+      if (!Number.isNaN(Number(label))) label = Number(label).toLocaleString(); // seperate with commas on thousand (i.e. 1,000)
 
       cells.push(
         <AnTableCell
@@ -208,9 +247,9 @@ function AnalysisTable() {
           onValueChange={(newValue, oldValue) =>
             onValueChange(newValue, oldValue, cell.field, key)
           }
-          label={cell.label}
+          value={cell.value}
         >
-          {cell.value}
+          {label}
         </AnTableCell>
       );
     }
@@ -252,18 +291,42 @@ function AnalysisTable() {
   }
 
   function tableJsx() {
-    if (isLoading) return "Loading...";
-    if (error) return "There was an whoopsie somewhere. Please try again later";
+    if (isLoading) return t("loading");
+    if (error) return t("500-error-message");
+    if (categoryRows.length === 0) return t("no-data");
 
     return <AnTable headers={headers}>{getRowsJsx(categoryRows)}</AnTable>;
   }
 
   return (
     <>
-      <ExportTable />
-      <div>
-        <MonthRangePicker onChange={setMonthRange} value={monthRange} />
+      <div id="table-functions">
+        <div>
+          <Button
+            sx={{ marginTop: 3, marginLeft: 2 }}
+            variant="contained"
+            onClick={() => setOpenBudget(true)}
+          >
+            {t("plan-budgets")}
+          </Button>
+          <ExportTable />
+        </div>
+        <div>
+          <MonthRangePicker onChange={setMonthRange} value={monthRange} />
+        </div>
       </div>
+
+      <SuccessModal
+        savedSuccessfully={savedSuccessfully}
+        setSavedSuccessfully={setSavedSuccessfully}
+        fromAnalysisPage={fromAnalysisPage}
+      />
+      <BudgetEditing
+        open={openBudget}
+        setOpen={setOpenBudget}
+        savedSuccessfully={savedSuccessfully}
+        setSavedSuccessfully={setSavedSuccessfully}
+      />
 
       <Box sx={{ px: 2 }} id="table-container">
         {tableJsx()}

@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+
+import userAtom from "@recoil/users";
 
 export default function Account(props) {
   const { values, setValues, index, accountData, setAccountData } = props;
 
   // translation i18 next
   const { t } = useTranslation();
+
+  // to get accsess to userTheme
+  const user = useRecoilValue(userAtom);
+  const usedTheme = user.data.theme;
 
   /* --------------------------- HANDLING USER INPUT --------------------------- */
 
@@ -43,7 +51,22 @@ export default function Account(props) {
       sx={{ width: 400 }}
       size="medium"
       renderInput={(params) => (
-        <TextField {...params} label={t("select-datev-account")} />
+        <TextField
+          color={usedTheme === "themeDark" ? "text" : null}
+          sx={
+            usedTheme === "themeDark"
+              ? {
+                  "& .MuiInputLabel-root": { color: "text.primary" },
+                  "& .MuiOutlinedInput-root": {
+                    "& > fieldset": { borderColor: "text.primary" },
+                  },
+                  svg: { color: "text.secondary" },
+                }
+              : null
+          }
+          {...params}
+          label={t("select-datev-account")}
+        />
       )}
     />
   );
