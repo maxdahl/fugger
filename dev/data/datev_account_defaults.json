@@ -1,6 +1,6 @@
 {
   "COGS": {
-    "order": 2,
+    "order": 1,
     "Aufwendungen für bezogene Leistungen": {
       "accounts": [
         { "name": "Fremdleistungen", "number": 3100 },
@@ -16,7 +16,7 @@
     }
   },
   "Consulting, Legal and Accounting": {
-    "order": 4,
+    "order": 2,
     "Sonstige betriebliche Aufwendungen": {
       "accounts": [
         { "name": "Rechts- und Beratungskosten", "number": 4950 },
@@ -27,7 +27,7 @@
     }
   },
   "Depreciation": {
-    "order": 5,
+    "order": 3,
     "Abschreibungen auf immaterielle Vermögensgegenstände des Anlagevermögens und Sachanlagen": {
       "accounts": [
         { "name": "Abschreibung immaterielle VermG", "number": 4822 },
@@ -75,7 +75,7 @@
     }
   },
   "Employee expenses": {
-    "order": 3,
+    "order": 4,
     "Löhne und Gehälter": {
       "accounts": [
         { "name": "Löhne und Gehälter", "number": 4100 },
@@ -135,6 +135,7 @@
     }
   },
   "extraordinary Costs": {
+    "order": 5,
     "Sonstige betriebliche Aufwendungen": {
       "accounts": [
         { "name": "Erlöse Sachanlageverkäufe Buchverlust", "number": 8800 },
@@ -148,7 +149,7 @@
     }
   },
   "extraordinary Revenue": {
-    "order": 1,
+    "order": 6, 
     "Erträge aus Beteiligungen": {
       "accounts": [
         { "name": "Erträge aus Beteiligungen", "number": 2600 },
@@ -250,6 +251,7 @@
     }
   },
   "Interests expenses": {
+    "order": 7,
     "Zinsen und ähnliche Aufwendungen": {
       "accounts": [
         { "name": "Zinsen und ähnliche Aufwendungen", "number": 2100 },
@@ -296,6 +298,7 @@
     }
   },
   "Interests income": {
+    "order": 8,
     "Sonstige Zinsen und ähnliche Erträge": {
       "accounts": [
         { "name": "Sonstige Zinsen und ähnliche Erträge", "number": 2650 },
@@ -326,6 +329,7 @@
     }
   },
   "Office": {
+    "order": 9,
     "Sonstige betriebliche Aufwendungen": {
       "accounts": [
         { "name": "Raumkosten", "number": 4200 },
@@ -350,7 +354,7 @@
     }
   },
   "Other Expenses": {
-    "order": 6,
+    "order": 10,
     "Sonstige betriebliche Aufwendungen": {
       "accounts": [
         { "name": "Verluste durch Verschmelzg./Umwandlung", "number": 2004 },
@@ -1128,6 +1132,7 @@
     }
   },
   "Other Income": {
+    "order": 11,
     "Sonstige betriebliche Erträge": {
       "accounts": [
         { "name": "Betriebsfremde Erträge", "number": 2510 },
@@ -1214,6 +1219,7 @@
     }
   },
   "Revenue": {
+    "order": 12,
     "Umsatzerlöse": {
       "accounts": [
         { "name": "Grundstückserträge Miete 19%", "number": 2750 },
@@ -1334,6 +1340,7 @@
     }
   },
   "Sales and Marketing": {
+    "order": 13,
     "Aufwendungen für bezogene Leistungen": {
       "accounts": [
         { "name": "Marketing Konrad", "number": 3104 },
@@ -1348,6 +1355,7 @@
     }
   },
   "Software / IT Infrastructure": {
+    "order": 14,
     "Sonstige betriebliche Aufwendungen": {
       "accounts": [
         { "name": "Aufwendungen für Lizenzen, Konzessionen", "number": 4964 }
@@ -1355,7 +1363,7 @@
     }
   },
   "Taxes": {
-    "order": 7,
+    "order": 15,
     "Steuern vom Einkommen und Ertrag": {
       "accounts": [
         { "name": "Körperschaftsteuer", "number": 2200 },
