@@ -191,9 +191,9 @@ function BudgetTable() {
         onValueChange={(newValue, oldValue) =>
           onValueChange(newValue, oldValue, "name", cellData[0].key)
         }
-        label={cellData[0].label}
+        value={cellData[0].value}
       >
-        {cellData[0].value}
+        {cellData[0].label}
       </AnTableCell>
     );
 
@@ -240,9 +240,9 @@ function BudgetTable() {
           onValueChange={(newValue, oldValue) =>
             onValueChange(newValue, oldValue, cell.field, key)
           }
-          label={cell.label}
+          value={cell.value}
         >
-          {cell.value}
+          {cell.label}
         </AnTableCell>
       );
     }
@@ -286,8 +286,9 @@ function BudgetTable() {
   }
 
   function tableJsx() {
-    if (isLoading) return "Loading...";
-    if (error) return "There was an whoopsie somewhere. Please try again later";
+    if (isLoading) return t("loading");
+    if (error) return t("500-error-message");
+    if (categoryRows.length === 0) return t("no-data");
 
     return <AnTable headers={headers}>{getRowsJsx(categoryRows)}</AnTable>;
   }

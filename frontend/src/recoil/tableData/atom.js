@@ -63,22 +63,22 @@ const getHeaders = ([from, to], table) => {
   if (table === "analysis") {
     monthlyHeaders = [
       {
-        value: "Actual",
+        value: "actual",
         sx: {
           borderLeft: 1,
           borderLeftColor: "table.border.thick",
         },
       },
       {
-        value: "Budget",
+        value: "budget",
         sx: {},
       },
       {
-        value: "Abs",
+        value: "abs",
         sx: {},
       },
       {
-        value: "Perct",
+        value: "perct",
         className: "pct-header",
         sx: {
           borderRight: 1,

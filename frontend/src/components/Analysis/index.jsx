@@ -167,6 +167,7 @@ function AnalysisTable() {
           Number(newValue);
 
         if (field === "budget") newCellValue = Math.abs(newCellValue);
+
         row.cellData[fieldKey].sx = getFieldColorSx(newCellValue);
         row.cellData[fieldKey].value = newCellValue;
         row.cellData[fieldKey].label = round(newCellValue);
@@ -248,9 +249,7 @@ function AnalysisTable() {
           }
           value={cell.value}
         >
-          <div>
-            <span>{label}</span>
-          </div>
+          {label}
         </AnTableCell>
       );
     }
@@ -292,8 +291,9 @@ function AnalysisTable() {
   }
 
   function tableJsx() {
-    if (isLoading) return "Loading...";
-    if (error) return "There was an whoopsie somewhere. Please try again later";
+    if (isLoading) return t("loading");
+    if (error) return t("500-error-message");
+    if (categoryRows.length === 0) return t("no-data");
 
     return <AnTable headers={headers}>{getRowsJsx(categoryRows)}</AnTable>;
   }

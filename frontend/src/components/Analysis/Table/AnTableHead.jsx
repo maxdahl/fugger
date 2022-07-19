@@ -1,12 +1,14 @@
 import React from "react";
 
+import { useTranslation } from "react-i18next";
+
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 
 import { AnTableHeadProps } from "./propTypes";
 
-function getHeaderRowCells(rowCells, depth = 0) {
+function getHeaderRowCells(rowCells, t, depth = 0) {
   const cells = [];
 
   for (const [index, cell] of rowCells.entries()) {
@@ -15,12 +17,12 @@ function getHeaderRowCells(rowCells, depth = 0) {
       color: "table.header.fontColor",
       borderBottom: 0,
     };
-    let className = `an-header-col-${depth}-${index + 1}`;
+    let className = `an-header-col an-header-col-${depth}-${index + 1}`;
 
     if (typeof cell === "string") {
       cells.push(
         <TableCell className={className} key={`${cell}-${index}`} sx={sx}>
-          {cell}
+          {t(cell)}
         </TableCell>
       );
     } else {
@@ -46,7 +48,7 @@ function getHeaderRowCells(rowCells, depth = 0) {
           align={align}
           sx={sx}
         >
-          <span>{value}</span>
+          <span>{t(value)}</span>
         </TableCell>
       );
     }
@@ -58,9 +60,13 @@ function getHeaderRowCells(rowCells, depth = 0) {
 function AnTableHead(props) {
   const { headers } = props;
   const rows = [];
+
+  const { t } = useTranslation();
   for (const [index, row] of headers.entries()) {
     rows.push(
-      <TableRow key={`row-${index}`}>{getHeaderRowCells(row, index)}</TableRow>
+      <TableRow key={`row-${index}`}>
+        {getHeaderRowCells(row, t, index)}
+      </TableRow>
     );
   }
 

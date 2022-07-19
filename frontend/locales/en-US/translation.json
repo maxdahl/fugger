@@ -43,6 +43,8 @@
   "menu-item-budgets": "Budgets",
   "language-toggle": "Language",
   "theme-toggle": "Theme",
+  "loading": "Loading...",
+  "no-data": "We couldn't find any data for the specified time period",
   "from": "From",
   "to": "To",
   "actual": "Actual",
