@@ -58,6 +58,7 @@ const User = sequelize.define(
 
     theme: {
       type: DataTypes.STRING(10),
+      default: "themeDark",
     },
   },
   { tableName: "users" }
@@ -66,7 +67,7 @@ const User = sequelize.define(
 User.beforeCreate((user) => {
   return bcrypt.hash(user.password, 10).then((hash) => {
     user.password = hash;
-    user.theme = "theme1";
+    user.theme = "themeDark";
   });
 });
 

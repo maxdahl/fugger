@@ -5,9 +5,9 @@ const router = express.Router();
 const { UserController } = require("../controllers");
 const { verifyToken } = require("../middleware/auth.middleware");
 
-router.put("/", verifyToken, (req, res) => {
+router.put("/", verifyToken, async (req, res) => {
   try {
-    UserController.changeUser(req, res);
+    await UserController.changeUser(req, res);
   } catch (err) {
     res.status(500).send("500-error");
   }

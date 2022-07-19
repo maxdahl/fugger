@@ -15,7 +15,17 @@ function AnTableRow(props) {
 
   let firstCell = null;
   if (isChild && !hasChildren)
-    firstCell = <TableCell className="firstColumn" />;
+    firstCell = (
+      <TableCell
+        className="firstColumn"
+        sx={{
+          backgroundColor: "table.body.backgroundColor",
+          textAlign: "center",
+          borderBottom: 1,
+          borderBottomColor: "table.border.thin",
+        }}
+      />
+    );
   else if (hasChildren) {
     firstCell = (
       <TableCell
@@ -25,6 +35,7 @@ function AnTableRow(props) {
           textAlign: "center",
           borderBottom: 1,
           borderBottomColor: "table.border.thin",
+          color: "table.accent",
         }}
       >
         <IconButton

@@ -142,6 +142,7 @@ const themeDark = {
 
     table: {
       text: "#ffffb9",
+      accent: "#ffffb9",
 
       header: {
         backgroundColor: "#2d2d2d",

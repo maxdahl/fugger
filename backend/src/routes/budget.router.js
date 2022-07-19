@@ -9,17 +9,17 @@ const { verifyToken } = require("../middleware/auth.middleware");
 //   BudgetController.getBudgets(req, res);
 // });
 
-router.put("/:budgetId", verifyToken, (req, res) => {
+router.put("/:budgetId", verifyToken, async (req, res) => {
   try {
-    BudgetController.updateBudget(req, res);
+    await BudgetController.updateBudget(req, res);
   } catch (err) {
     res.status(500).send("500-error");
   }
 });
 
-router.post("/", verifyToken, (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   try {
-    BudgetController.createBudget(req, res);
+    await BudgetController.createBudget(req, res);
   } catch (err) {
     res.status(500).send("500-error");
   }

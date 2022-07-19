@@ -28,6 +28,7 @@ table {
   left: 60px;
 }
 
+.an-header-col,
 .an-col {
   min-width: 6vw;
   max-width: 10vw;
@@ -64,7 +65,7 @@ table {
 .pct-col {
 }
 
-.pct-col span::after {
+.pct-col::after {
   content: "%";
 }
 

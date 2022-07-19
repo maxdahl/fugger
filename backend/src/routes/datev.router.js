@@ -8,13 +8,17 @@ const {
 } = require("../controllers");
 const { verifyToken } = require("../middleware/auth.middleware");
 
-router.get("/", verifyToken, (req, res) => {
-  DatevAccountController.getDatevAccounts(req, res);
+router.get("/", verifyToken, async (req, res) => {
+  try {
+    await DatevAccountController.getDatevAccounts(req, res);
+  } catch (err) {
+    res.status(500).send("500-error");
+  }
 });
 
-router.put("/:accountId", verifyToken, (req, res) => {
+router.put("/:accountId", verifyToken, async (req, res) => {
   try {
-    CategoryController.updateDatevAccount(req, res);
+    await CategoryController.updateDatevAccount(req, res);
   } catch (err) {
     res.status(500).send("500-error");
   }
