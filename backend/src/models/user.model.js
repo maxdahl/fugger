@@ -67,7 +67,7 @@ const User = sequelize.define(
 User.beforeCreate((user) => {
   return bcrypt.hash(user.password, 10).then((hash) => {
     user.password = hash;
-    user.theme = "theme1";
+    user.theme = "themeDark";
   });
 });
 
