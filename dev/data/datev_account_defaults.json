@@ -149,7 +149,7 @@
     }
   },
   "extraordinary Revenue": {
-    "order": 6, 
+    "order": 6,
     "Erträge aus Beteiligungen": {
       "accounts": [
         { "name": "Erträge aus Beteiligungen", "number": 2600 },
