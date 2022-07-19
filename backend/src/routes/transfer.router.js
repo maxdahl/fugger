@@ -9,17 +9,17 @@ const { verifyToken } = require("../middleware/auth.middleware");
 //   TransferController.getTransfers(req, res);
 // });
 
-router.put("/:transferId", verifyToken, (req, res) => {
+router.put("/:transferId", verifyToken, async (req, res) => {
   try {
-    TransferController.updateTransfer(req, res);
+    await TransferController.updateTransfer(req, res);
   } catch (err) {
     res.status(500).send("500-error");
   }
 });
 
-router.post("/", verifyToken, (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   try {
-    TransferController.createTransfers(req, res);
+    await TransferController.createTransfers(req, res);
   } catch (err) {
     console.error(err);
     res.status(500).send("500-error");
