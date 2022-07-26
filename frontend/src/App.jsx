@@ -49,7 +49,6 @@ function App() {
     );
   }
 
-
   if (user.isAuthenticated === true && user.isLoading === false) {
     i18n.changeLanguage(user.data.language);
     return (
@@ -75,7 +74,6 @@ function App() {
   }
 
   return null;
-
 }
 
 export default App;
