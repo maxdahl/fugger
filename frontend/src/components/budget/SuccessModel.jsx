@@ -51,11 +51,19 @@ export default function SuccessModal(props) {
         </DialogContent>
         <DialogActions>
           {fromAnalysisPage ? (
-            <Button onClick={handleGoToPage} autoFocus>
+            <Button
+              onClick={handleGoToPage}
+              autoFocus
+              sx={{ color: "text.primary" }}
+            >
               {t("go-to-budget-page")}
             </Button>
           ) : null}
-          <Button onClick={handleClose} autoFocus>
+          <Button
+            onClick={handleClose}
+            autoFocus
+            sx={{ color: "text.primary" }}
+          >
             {t("close")}
           </Button>
         </DialogActions>
