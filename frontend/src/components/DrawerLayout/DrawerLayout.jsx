@@ -255,8 +255,8 @@ export default function DrawerLayout({ children, currentTheme }) {
                 aria-haspopup="true"
                 color="inherit"
               >
-                <AccountCircle 
-                sx={{fontSize:"28px", color:"primary.contrastText"}}
+                <AccountCircle
+                  sx={{ fontSize: "28px", color: "primary.contrastText" }}
                 />
               </IconButton>
             </Link>
