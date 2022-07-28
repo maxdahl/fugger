@@ -248,7 +248,7 @@ export default function DrawerLayout({ children, currentTheme }) {
             </IconButton>
             <Link to="#">
               <IconButton
-                // size="large"
+                sx={{color:"primary.contrastText"}}
                 edge="end"
                 aria-label="account of current user"
                 aria-controls={menuId}
