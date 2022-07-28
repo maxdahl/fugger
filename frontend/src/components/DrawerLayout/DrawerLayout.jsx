@@ -36,7 +36,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Avatar, Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import Logo from '../../assets/fugger_logo.svg';
+import Logo from "../../assets/fugger_logo.svg";
 
 const drawerWidth = 240;
 
