@@ -48,8 +48,12 @@ const theme1 = {
       linkColor: "#33eaff",
     },
     background: {
-      color: "#ab2adf",
+      color: "#3db4c1",
       default: "#ececec",
+    },
+
+    contrastText: {
+      main: "#ffef62",
     },
 
     table: {
@@ -85,8 +89,12 @@ const theme2 = {
       linkColor: "#3369ff",
     },
     background: {
-      color: "#b2000ad",
+      color: "#cc3d3d",
       default: "#ececec",
+    },
+
+    contrastText: {
+      main: "#ececec",
     },
 
     table: {

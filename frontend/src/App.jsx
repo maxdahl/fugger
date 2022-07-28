@@ -38,7 +38,7 @@ function App() {
 
   if (user.isAuthenticated === false) {
     return (
-      <ThemeProvider theme={createTheme(appliedTheme.themeDark)}>
+      <ThemeProvider theme={createTheme(appliedTheme.theme1)}>
         <Router>
           <Routes>
             <Route path="/signup" element={<SignUpPage />} />
