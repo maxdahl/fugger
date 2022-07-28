@@ -36,6 +36,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Avatar, Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import Logo from '../../assets/fugger_logo.svg';
 
 const drawerWidth = 240;
 
@@ -219,7 +220,7 @@ export default function DrawerLayout({ children, currentTheme }) {
             spacing={1}
             alignItems="center"
           >
-            <Avatar src="src\assets\fugger_logo.svg" />
+            <Avatar src={Logo} />
             <Typography variant="h6" noWrap component="div">
               Fugger
             </Typography>
