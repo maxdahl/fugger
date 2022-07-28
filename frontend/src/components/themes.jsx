@@ -40,8 +40,8 @@ const theme1 = {
   palette: {
     primary: {
       main: "#00a0b2",
-      light: "#00a0b27b",
-      thin: "#a0b234",
+      light: "#3db4c1",
+      thin: "#6ec7d1",
       contrast: "#006471",
       contrastText: "#ffef62",
       // tableText: "#00ab2ad",
@@ -78,8 +78,8 @@ const theme2 = {
   palette: {
     primary: {
       main: "#b20000",
-      light: "#b2007b",
-      thin: "#b20034",
+      light: "#cc3d3d",
+      thin: "#cc6060",
       contrast: "#710000",
       contrastText: "#ececec",
       linkColor: "#3369ff",
