@@ -248,7 +248,7 @@ export default function DrawerLayout({ children, currentTheme }) {
             </IconButton>
             <Link to="#">
               <IconButton
-                sx={{color:"primary.contrastText"}}
+                sx={{ color: "primary.contrastText" }}
                 edge="end"
                 aria-label="account of current user"
                 aria-controls={menuId}
