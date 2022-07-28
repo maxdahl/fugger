@@ -246,16 +246,18 @@ export default function DrawerLayout({ children, currentTheme }) {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <Link to="/profile">
+            <Link to="#">
               <IconButton
-                size="large"
+                // size="large"
                 edge="end"
                 aria-label="account of current user"
                 aria-controls={menuId}
                 aria-haspopup="true"
                 color="inherit"
               >
-                <AccountCircle />
+                <AccountCircle 
+                sx={{fontSize:"28px", color:"primary.contrastText"}}
+                />
               </IconButton>
             </Link>
           </Box>
