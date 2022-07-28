@@ -274,7 +274,7 @@ export default function DrawerLayout({ children, currentTheme }) {
             spacing={1}
             alignItems="center"
           >
-            <Avatar src="src\assets\fugger_logo.svg" />
+            <Avatar src={Logo} />
             <Typography
               variant="h6"
               noWrap

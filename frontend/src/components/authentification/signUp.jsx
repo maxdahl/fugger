@@ -31,7 +31,7 @@ import { StaticRouter } from "react-router-dom/server";
 import validator from "validator";
 import { useTranslation } from "react-i18next";
 import Api from "@services/Api";
-
+import Logo from "../../assets/fugger_logo.svg";
 import { userWithAuth } from "@recoil/users";
 
 // To convert react-router Links in MUI Links, to style them like MUI components --- start --- //
@@ -158,7 +158,7 @@ function SignUpPage() {
     <Box sx={styleContainer}>
       <Stack alignItems="center" spacing={1}>
         <Stack direction="row" spacing={1} alignItems="center">
-          <Avatar src="src\assets\fugger_logo.svg" />
+          <Avatar src={Logo} />
           <Typography sx={styleText} variant="h5">
             Fugger
           </Typography>
